@@ -115,7 +115,7 @@ namespace BriefSTL
 			}
 			else
 			{
-				Obj* _My_free_list = _Free_list + _FreeList_Index(__n);
+				Obj* volatile * _My_free_list = _Free_list + _FreeList_Index(__n);
 
 				Obj* __q = (Obj*)__p;
 
