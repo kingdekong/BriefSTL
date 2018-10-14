@@ -1,6 +1,6 @@
 #ifndef _JDG_STL_UNINITIALIZED_H
 #define _JDG_STL_UNINITIALIZED_H
-
+#include "Iterator.h"
 //定义3个全局函数，处理未初始化的空间。
 //1. uninitialized_copy()对应上层的算法copy
 //2. uninitialized_fill()对应上层的算法fill
@@ -128,8 +128,8 @@ namespace BriefSTL
 	inline _ForwardIter __uninitialized_fill_n(_ForwardIter __first, _Size __n,
 		const _Tp& __x, _Tp1*)
 	{
-		typedef typename __type_traits<_Tp1>::is_POD _Is_POD;
-		return __uninitialized_fill_n_aux(__first, __n, __x, _Is_POD);
+		typedef typename __type_traits<_Tp1>::is_POD_type _Is_POD;
+		return __uninitialized_fill_n_aux(__first, __n, __x, _Is_POD());
 	}
 	template<typename _ForwardIter, typename _Size, typename _Tp>
 	inline _ForwardIter uninitialized_fill_n(_ForwardIter __first, _Size __n,

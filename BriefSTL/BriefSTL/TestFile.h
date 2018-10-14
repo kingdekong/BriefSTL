@@ -1,6 +1,9 @@
 #ifndef _TESTFILE_H
 #define _TESTFILE_H
+
 #include "Allocator.h"
+#include "Uninitialized.h"
+#include "Iterator.h"
 
 namespace JDG_TestAlloc
 {
@@ -37,5 +40,25 @@ namespace JDG_TestAllocator
 	}
 }
 
+namespace JDG_TestIteratorTraits
+{
+	void testIteratorTraits()
+	{
+	
+	}
+}
+
+namespace JDG_TestUninitialized
+{
+	void testuninitialized_fill_n()
+	{
+		int array[10];
+		BriefSTL::uninitialized_fill_n(array, 10, 1);
+		for (auto n : array)
+		{
+			std::cout << n << std::endl;
+		}
+	}
+}
 #endif // !_TESTFILE_H
 
