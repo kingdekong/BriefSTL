@@ -5,7 +5,7 @@
 namespace BriefSTL
 {
 	template<int __inst>
-	class __first_alloc_template
+	class first_alloc_template
 	{
 	public:
 		static void* allocate(size_t __n)
@@ -23,10 +23,10 @@ namespace BriefSTL
 
 	};
 
-	typedef __first_alloc_template<0> malloc_alloc;
+	typedef first_alloc_template<0> malloc_alloc;
 
 	template<int __inst>
-	class __second_alloc_template
+	class second_alloc_template
 	{
 	private:
 		//data area
@@ -138,22 +138,22 @@ namespace BriefSTL
 		}
 	};
 
-	typedef __second_alloc_template<0> alloc;
+	typedef second_alloc_template<0> alloc;
 
 	template<int inst>
-	char* __second_alloc_template<inst>::_Start_free = nullptr;
+	char* second_alloc_template<inst>::_Start_free = nullptr;
 	template<int inst>
-	char* __second_alloc_template<inst>::_End_free = nullptr;
+	char* second_alloc_template<inst>::_End_free = nullptr;
 	template<int inst>
-	size_t __second_alloc_template<inst>::_Heap_size = 0;
+	size_t second_alloc_template<inst>::_Heap_size = 0;
 
 	template<int inst>
-	typename __second_alloc_template<inst>::Obj* volatile
-		__second_alloc_template<inst>::_Free_list[__second_alloc_template<inst>::_NFreeLists]
+	typename second_alloc_template<inst>::Obj* volatile
+		second_alloc_template<inst>::_Free_list[second_alloc_template<inst>::_NFreeLists]
 		= { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, };
 
 	template<int __inst>
-	inline char * __second_alloc_template<__inst>::_Chunk_alloc(size_t __size, int & __nobjs)
+	inline char * second_alloc_template<__inst>::_Chunk_alloc(size_t __size, int & __nobjs)
 	{
 		char* __Result;
 		size_t __Total_bytes = __size * __nobjs;//是大小
@@ -231,7 +231,7 @@ namespace BriefSTL
 
 	// 缺省取20个新节点
 	template<int __inst>
-	inline void * __second_alloc_template<__inst>::_Refill(size_t __n)
+	inline void * second_alloc_template<__inst>::_Refill(size_t __n)
 	{
 		// 缺省取20个新节点,放在__n对象的list下面，其实每次都是分配double
 		// 留下20*__n大小空间，以作备用，即所谓的pool
@@ -279,6 +279,27 @@ namespace BriefSTL
 		return __Result;
 	}
 
+	template<class _Tp, class _Alloc>
+	class simple_alloc {
+
+	public:
+		static _Tp* allocate(size_t __n)
+		{
+			return 0 == __n ? 0 : (_Tp*)_Alloc::allocate(__n * sizeof(_Tp));
+		}
+		static _Tp* allocate(void)
+		{
+			return (_Tp*)_Alloc::allocate(sizeof(_Tp));
+		}
+		static void deallocate(_Tp* __p, size_t __n)
+		{
+			if (0 != __n) _Alloc::deallocate(__p, __n * sizeof(_Tp));
+		}
+		static void deallocate(_Tp* __p)
+		{
+			_Alloc::deallocate(__p, sizeof(_Tp));
+		}
+	};
 }
 #endif // !_JDG_STL_ALLOC_H
 

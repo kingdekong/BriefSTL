@@ -115,6 +115,44 @@ namespace BriefSTL
 	*/
 	//该函数将上面两个函数合并，该函数的参数实际上没有用到，
 	//用到的只是参数的类型
+	template <class _Tp, class _Distance>
+	inline input_iterator_tag
+		iterator_category(const input_iterator<_Tp, _Distance>&)
+	{
+		return input_iterator_tag();
+	}
+
+	inline output_iterator_tag iterator_category(const output_iterator&)
+	{
+		return output_iterator_tag();
+	}
+
+	template <class _Tp, class _Distance>
+	inline forward_iterator_tag
+		iterator_category(const forward_iterator<_Tp, _Distance>&)
+	{
+		return forward_iterator_tag();
+	}
+
+	template <class _Tp, class _Distance>
+	inline bidirectional_iterator_tag
+		iterator_category(const bidirectional_iterator<_Tp, _Distance>&)
+	{
+		return bidirectional_iterator_tag();
+	}
+
+	template <class _Tp, class _Distance>
+	inline random_access_iterator_tag
+		iterator_category(const random_access_iterator<_Tp, _Distance>&)
+	{
+		return random_access_iterator_tag();
+	}
+
+	template <class _Tp>
+	inline random_access_iterator_tag iterator_category(const _Tp*)
+	{
+		return random_access_iterator_tag();
+	}
 
 	//iterator_category有5种
 	template<typename _Iter>
@@ -139,32 +177,32 @@ namespace BriefSTL
 		return static_cast<typename iterator_traits<_Iter>::value_type*>(0);
 	}
 
-	//template <class _Tp, class _Distance>
-	//inline _Tp* value_type(const input_iterator<_Tp, _Distance>&)
-	//{
-	//	return (_Tp*)(0);
-	//}
+	template <class _Tp, class _Distance>
+	inline _Tp* value_type(const input_iterator<_Tp, _Distance>&)
+	{
+		return (_Tp*)(0);
+	}
 
-	//template <class _Tp, class _Distance>
-	//inline _Tp* value_type(const forward_iterator<_Tp, _Distance>&)
-	//{
-	//	return (_Tp*)(0);
-	//}
+	template <class _Tp, class _Distance>
+	inline _Tp* value_type(const forward_iterator<_Tp, _Distance>&)
+	{
+		return (_Tp*)(0);
+	}
 
-	//template <class _Tp, class _Distance>
-	//inline _Tp* value_type(const bidirectional_iterator<_Tp, _Distance>&)
-	//{
-	//	return (_Tp*)(0);
-	//}
+	template <class _Tp, class _Distance>
+	inline _Tp* value_type(const bidirectional_iterator<_Tp, _Distance>&)
+	{
+		return (_Tp*)(0);
+	}
 
-	//template <class _Tp, class _Distance>
-	//inline _Tp* value_type(const random_access_iterator<_Tp, _Distance>&)
-	//{
-	//	return (_Tp*)(0);
-	//}
+	template <class _Tp, class _Distance>
+	inline _Tp* value_type(const random_access_iterator<_Tp, _Distance>&)
+	{
+		return (_Tp*)(0);
+	}
 
-	//template <class _Tp>
-	//inline _Tp* value_type(const _Tp*) { return (_Tp*)(0); }
+	template <class _Tp>
+	inline _Tp* value_type(const _Tp*) { return (_Tp*)(0); }
 
 
 #define __ITERATOR_CATEGORY(__i) iterator_category(__i)

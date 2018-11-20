@@ -30,6 +30,7 @@ namespace BriefSTL
 		static	_Tp* allocate(size_t __n, const void * = 0)
 		{
 			return __n == 0 ? 0 : static_cast<_Tp*>(_Alloc::allocate(__n * sizeof(_Tp)));
+			//return  _Alloc::allocate(__n  ) ;
 		}
 
 		static	void deallocate(pointer __p)

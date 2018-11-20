@@ -1,10 +1,11 @@
 #ifndef _TESTFILE_H
 #define _TESTFILE_H
+#include <string>
 
 #include "Allocator.h"
 #include "Uninitialized.h"
 #include "Iterator.h"
-
+#include "Vector.h"
 namespace JDG_TestAlloc
 {
 	void testAlloc()
@@ -44,7 +45,7 @@ namespace JDG_TestIteratorTraits
 {
 	void testIteratorTraits()
 	{
-	
+
 	}
 }
 
@@ -60,5 +61,42 @@ namespace JDG_TestUninitialized
 		}
 	}
 }
+
+
+namespace JDG_TestVector
+{
+	BriefSTL::vector <int> v1(5);
+
+	void testVector1()
+	{
+		for (BriefSTL::vector<int>::iterator it = v1.begin(); it != v1.end(); ++it)
+		{
+			std::cout << "testVector1 *it: " << *it << std::endl;
+		}
+		std::cout << std::endl;
+
+	}
+	void testVector2()
+	{
+		BriefSTL::vector<int> v2(5, 100);
+
+		for (BriefSTL::vector<int>::iterator it = v2.begin(); it != v2.end(); ++it)
+		{
+			std::cout << "testVector2 *it: " << *it << std::endl;
+		}
+	}
+
+	void testVector3()
+	{
+		std::cout << std::endl;
+		BriefSTL::vector<std::string> v2(5, "jdg");
+
+		for (BriefSTL::vector<std::string>::iterator it = v2.begin(); it != v2.end(); ++it)
+		{
+			std::cout << "testVector3 *it: " << *it << std::endl;
+		}
+	}
+}
+
 #endif // !_TESTFILE_H
 

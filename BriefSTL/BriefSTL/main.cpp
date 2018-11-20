@@ -14,7 +14,11 @@ int main()
 
 	//cout << "Holle World 03 " << endl;
 
-	JDG_TestUninitialized::testuninitialized_fill_n();
+	//JDG_TestUninitialized::testuninitialized_fill_n();
+
+	JDG_TestVector::testVector1();
+	JDG_TestVector::testVector2();
+	JDG_TestVector::testVector3();
 	system("pause");
 	return 0;
 }

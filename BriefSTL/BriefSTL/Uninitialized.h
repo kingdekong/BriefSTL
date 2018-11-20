@@ -1,15 +1,13 @@
 #ifndef _JDG_STL_UNINITIALIZED_H
 #define _JDG_STL_UNINITIALIZED_H
 #include "Iterator.h"
-//定义3个全局函数，处理未初始化的空间。
-//1. uninitialized_copy()对应上层的算法copy
-//2. uninitialized_fill()对应上层的算法fill
-//3 .uninitialized_fill_n()对应上层的算法fill_n
 
 namespace BriefSTL
 {
 	template<typename _InputIter, typename _ForwardIter >
-	_ForwardIter __uninitialized_copy_aux(_InputIter __first, _InputIter __last, _ForwardIter __result, __true_type)
+	inline _ForwardIter
+		__uninitialized_copy_aux(_InputIter __first, _InputIter __last,
+			_ForwardIter __result, __true_type)
 	{
 		//Todo
 		// 以后会换成Bried STL 中的copy算法实现
@@ -17,8 +15,9 @@ namespace BriefSTL
 	}
 
 	template<typename _InputIter, typename _ForwardIter >
-	_ForwardIter __uninitialized_copy_aux(_InputIter __first, _InputIter __last, 
-		_ForwardIter __result, __false_type)
+	_ForwardIter
+		__uninitialized_copy_aux(_InputIter __first, _InputIter __last,
+			_ForwardIter __result, __false_type)
 	{
 		_ForwardIter __cur = __result;
 		for (; __first != __last; ++__first, ++__cur)
@@ -30,7 +29,8 @@ namespace BriefSTL
 
 	template<typename _InputIter, typename _ForwardIter, typename _Tp>
 	inline _ForwardIter
-		__uninitialized_copy(_InputIter __first, _InputIter __last, _ForwardIter __result, _Tp*)
+		__uninitialized_copy(_InputIter __first, _InputIter __last,
+			_ForwardIter __result, _Tp*)
 	{
 		typedef typename __type_traits<_Tp>::is_POD_type _Is_POD;
 		return __uninitialized_copy_aux(__first, __last, __result, _Is_POD());
@@ -38,10 +38,11 @@ namespace BriefSTL
 
 	template<typename _InputIter, typename _ForwardIter>
 	inline _ForwardIter
-		uninitializet_copy(_InputIter __first, _InputIter __last,
+		uninitialized_copy(_InputIter __first, _InputIter __last,
 			_ForwardIter __result)
 	{
-		return __uninitialized_copy(__first, __last, __result, __VALUE_TYPE(__result));
+		return __uninitialized_copy(__first, __last, __result,
+			__VALUE_TYPE(__result));
 	}
 
 	//特化 char* 
@@ -62,11 +63,53 @@ namespace BriefSTL
 
 	// uninitialized_copy_n : not part of the c++ standard
 	// 
+	//template <typename _InputIter, typename _Size, typename _ForwardIter>
+	//std::pair< _InputIter, _ForwardIter>
+	//	__uninitialized_copy_n(_InputIter __first, _Size __count,
+	//		_ForwardIter __result, input_iterator_tag)
+	//{
+	//	_ForwardIter __cur = __result;
+
+	//	for (; __count > 0; --__count, ++__first, ++__cur)
+	//	{
+	//		_Construct(&*__cur, *__first);
+	//	}
+	//	return pair<_InputIter, _ForwardIter>(__first, __cur);
+	//}
+
+
+	//template <class _RandomAccessIter, class _Size, class _ForwardIter>
+	//inline pair<_RandomAccessIter, _ForwardIter>
+	//	__uninitialized_copy_n(_RandomAccessIter __first, _Size __count,
+	//		_ForwardIter __result, random_access_iterator_tag)
+	//{
+	//	_RandomAccessIter __last = __first + __count;
+	//	return pair<_RandomAccessIter, _ForwardIter>(__last,
+	//		uninitialized_copy(__first, __last, __result));
+	//}
+
+	//template <class _InputIter, class _Size, class _ForwardIter>
+	//inline pair<_InputIter, _ForwardIter>
+	//	__uninitialized_copy_n(_InputIter __first, _Size __count, _ForwardIter __result)
+	//{
+	//	return __uninitialized_copy_n(__first, __count, __result,
+	//		__ITERATOR_CATEGORY(__first));
+	//}
+
+	//template <class _InputIter, class _Size, class _ForwardIter>
+	//inline pair<_InputIter, _ForwardIter>
+	//	uninitialized_copy_n(_InputIter __first, _Size __count, _ForwardIter __result)
+	//{
+	//	return __uninitialized_copy_n(__first, __count, __result,
+	//		__ITERATOR_CATEGORY(__first));
+	//}
+
 
 	//uninitialized_fill start
 	template<typename _ForwardIter, typename _Tp>
-	void __uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
-		const _Tp& __x, __true_type)
+	inline void
+		__uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
+			const _Tp& __x, __true_type)
 	{
 		//Todo
 		//将来替换为BriefSTL的fill
@@ -74,8 +117,9 @@ namespace BriefSTL
 	}
 
 	template<typename _ForwardIter, typename _Tp>
-	void __uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
-		const _Tp& __x, __false_type)
+	void
+		__uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
+			const _Tp& __x, __false_type)
 	{
 		_ForwardIter __cur = __first;
 		for (; __cur != __last; ++__cur)
@@ -85,31 +129,45 @@ namespace BriefSTL
 	}
 
 	template<typename _ForwardIter, typename _Tp, typename _Tp1>
-	inline void __uninitialized_fill(_ForwardIter __first, _ForwardIter __last,
-		const _Tp&__x, _Tp1*)
+	inline void
+		__uninitialized_fill(_ForwardIter __first, _ForwardIter __last,
+			const _Tp&__x, _Tp1*)
 	{
 		typedef typename __type_traits<_Tp1>::is_POD_type _Is_POD;
 		__uninitialized_fill_aux(__first, __last, __x, _Is_POD);
 	}
 	// 
 	template<typename _ForwardIter, typename _Tp>
-	inline void uninitialized_fill(_ForwardIter __first, _ForwardIter __last,
-		const _Tp& __x)
+	inline void
+		uninitialized_fill(_ForwardIter __first, _ForwardIter __last,
+			const _Tp& __x)
 	{
-		__uninitialized_fill(__first, __last, __x, VALUE_TYPE(__first));
+		__uninitialized_fill(__first, __last, __x, __VALUE_TYPE(__first));
 	}
 	//uninitialized_fill end
 
 
 	//uninitialized_fill_n start
+	template <class _OutputIter, class _Size, class _Tp>
+	_OutputIter fill_n(_OutputIter __first, _Size __n, const _Tp& __value)
+	{
+		for (; __n > 0; --__n, ++__first)
+		{
+			*__first = __value;
+		}
+		return __first;
+	}
 
 	template<typename _ForwardIter, typename _Size, typename _Tp>
-	_ForwardIter __uninitialized_fill_n_aux(_ForwardIter __first, _Size __n,
-		const _Tp& __x, __true_type)
+	inline
+		_ForwardIter __uninitialized_fill_n_aux(_ForwardIter __first, _Size __n,
+			const _Tp& __x, __true_type)
 	{
 		//Todo
 		//将来替换为BriefSTL的fill_n
-		return std::fill_n(__first, __n, __x);
+		//return std::fill_n(__first, __n, __x);
+
+		return  fill_n(__first, __n, __x);
 	}
 
 	template<typename _ForwardIter, typename _Size, typename _Tp>
@@ -125,16 +183,18 @@ namespace BriefSTL
 	}
 
 	template<typename _ForwardIter, typename _Size, typename _Tp, typename _Tp1>
-	inline _ForwardIter __uninitialized_fill_n(_ForwardIter __first, _Size __n,
-		const _Tp& __x, _Tp1*)
+	inline _ForwardIter
+		__uninitialized_fill_n(_ForwardIter __first, _Size __n,
+			const _Tp& __x, _Tp1*)
 	{
 		typedef typename __type_traits<_Tp1>::is_POD_type _Is_POD;
 		return __uninitialized_fill_n_aux(__first, __n, __x, _Is_POD());
 	}
 	template<typename _ForwardIter, typename _Size, typename _Tp>
-	inline _ForwardIter uninitialized_fill_n(_ForwardIter __first, _Size __n,
-		const _Tp& __x)
+	inline _ForwardIter
+		uninitialized_fill_n(_ForwardIter __first, _Size __n, const _Tp& __x)
 	{
+		std::cout << __x << std::endl;
 		return __uninitialized_fill_n(__first, __n, __x, __VALUE_TYPE(__first));
 	}
 
