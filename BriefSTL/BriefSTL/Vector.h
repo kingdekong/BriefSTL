@@ -1,6 +1,6 @@
 #ifndef _JDG_STL_Vector_H
 #define _JDG_STL_Vector_H
-#include <algorithm> 
+
 #include "Allocator.h"
 #include "Uninitialized.h"
 //#include "Construct.h"
@@ -341,8 +341,7 @@ namespace BriefSTL
 	}
 
 	template<typename _Tp, typename Alloc>
-	inline void vector<_Tp, Alloc>::_M_fill_insert(iterator __pos, size_type __n,
-		const _Tp & __x)
+	inline void vector<_Tp, Alloc>::_M_fill_insert(iterator __pos, size_type __n, const _Tp & __x)
 	{
 		if (__n != 0)
 		{
@@ -353,7 +352,7 @@ namespace BriefSTL
 				iterator __old_finish = M_finish;
 				if (__elems_after > __n)
 				{
-					//uninitialized_copy(M_finish - __n, M_finish, M_finish);
+					uninitialized_copy(M_finish - __n, M_finish, M_finish);
 					M_finish += __n;
 					std::copy_backward(__pos, __old_finish, M_finish);
 					M_finish += __elems_after;

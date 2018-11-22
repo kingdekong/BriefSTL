@@ -16,9 +16,14 @@ int main()
 
 	//JDG_TestUninitialized::testuninitialized_fill_n();
 
-	JDG_TestVector::testVector1();
-	JDG_TestVector::testVector2();
-	JDG_TestVector::testVector3();
+	//JDG_TestVector::testVector1();
+	//JDG_TestVector::testVector2();
+	//JDG_TestVector::testVector3();
+
+	//JDG_TestList::testList();
+	JDG_TestList::testListInsert();
+	JDG_TestList::testListRemove();
+
 	system("pause");
 	return 0;
 }
